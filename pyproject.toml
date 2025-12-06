@@ -1,0 +1,24 @@
+[project]
+name = "lista-de-tarefas"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Daltro Oliveira Vinuto", email = "daltroov777@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "yes (>=0.0.1,<0.0.2)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[dependency-groups]
+dev = [
+    "django (>=6.0,<7.0)",
+    "python-dotenv (>=1.2.1,<2.0.0)",
+    "mysql-connector-python (>=9.5.0,<10.0.0)"
+]

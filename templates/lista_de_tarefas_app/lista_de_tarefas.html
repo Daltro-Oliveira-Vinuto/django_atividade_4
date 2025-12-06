@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Minhas Tarefas{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <!-- Nova Tarefa -->
+        <div class="card mb-4 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Nova Tarefa</h5>
+                <form method="POST" class="row g-3">
+                    {% csrf_token %}
+                    <div class="col-md-7">
+                        <input type="text" name="titulo" class="form-control" placeholder="O que precisa fazer?" required>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="date" name="prazo" class="form-control">
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">Adicionar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Lista -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Tarefas <span class="badge bg-secondary">{{ all_tasks|length }}</span></h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for t in all_tasks %}
+                <li class="list-group-item rounded-3 {% if t.prazo_vencido %}vencida {% endif %}">
+                    <div class="d-flex align-items-center">
+
+
+                        <form method="POST" action="{% url 'toggle_concluida' t.pk %}" class="me-3" id="{{t.pk}}">
+                            {% csrf_token %}
+                            <input type="checkbox" class="btn-check" id="c{{ t.pk }}" {% if t.concluida %}checked{% endif %}
+                            onchange="document.getElementById('{{t.pk}}').submit();">
+                            <label class="btn btn-outline-success" for="c{{ t.pk }}"></label>
+                        </form>
+
+                        <div class="flex-grow-1 {% if t.concluida %}task-done{% endif %} {%if t.prazo_vencido %}  border border-danger rounded-2 p-1 {% endif %}">
+
+                            <strong>{{ t.titulo }}</strong>
+
+                            {% if t.prazo %}
+                            <small class="d-block text-muted">
+                                Prazo: {{ t.prazo|date:"d/m/Y" }}
+
+                                {% if t.prazo_vencido %} <span class="text-danger fw-bold">(VENCIDA)</span>{% endif %}
+                            </small>
+                            {% endif %}
+                        </div>
+
+                        <form method="POST" action="{% url 'deletar_tarefa' t.pk %}"
+                              onsubmit="return confirm('Excluir?');">
+                            {% csrf_token %}
+                            <button class="btn btn-md btn-outline-danger ms-1"></button>
+                        </form>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="list-group-item text-center text-muted">Nenhuma tarefa ainda.</li>
+                {% endfor %}
+            </ul>
+            <div class="card-footer text-center small text-muted">
+                Hoje: {{ today_object|date:"d/m/Y" }}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
