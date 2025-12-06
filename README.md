@@ -3,7 +3,7 @@
 > Conforme podemos ver abaixo pelas seguintes capturas da tela a lista de tarefas funciona corretamente.
 > Em cada captura podemos ver a direita o estado do navegador(Chrome) e a esquerda do prompt superior o estado da tabela(lista_de_tarefas_app_tarefa) do banco de dados afetadas pelas açoes CRUD e no prompt de baixo as requições e respostas HTTP do servidor rodando localmente(127.0.0.1:8000) que usa o framework Django como Web Back End.
 
-[imagem](/assets/0_migration.png)
+![imagem](/assets/0_migration.png)
 > * Antes de rodarmos o site observamos que migrações foram realizadas corretamente.
 
 ![imagem](/assets/1_runserver.png)
